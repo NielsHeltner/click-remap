@@ -56,8 +56,11 @@ public class ClickRemappingPlugin extends Plugin {
 		return configManager.getConfig(ClickRemappingConfig.class);
 	}
 
-	public void click() {
+	public void press() {
 		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+	}
+
+	public void release() {
 		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
 

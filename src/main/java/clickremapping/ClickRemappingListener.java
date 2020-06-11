@@ -26,14 +26,21 @@ public class ClickRemappingListener implements KeyListener {
         }
 
         if (config.keybind().matches(e) && !heldDown) {
-            plugin.click();
+            plugin.press();
             heldDown = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        heldDown = false;
+        if (plugin.checkGuard()) {
+            return;
+        }
+
+        if (config.keybind().matches(e) && heldDown) {
+            plugin.release();
+            heldDown = false;
+        }
     }
 
 }
