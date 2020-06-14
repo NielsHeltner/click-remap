@@ -14,8 +14,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import javax.inject.Inject;
-import java.awt.*;
-import java.awt.event.InputEvent;
 
 @Slf4j
 @PluginDescriptor(
@@ -33,15 +31,8 @@ public class ClickRemappingPlugin extends Plugin {
 	@Inject
 	private ClickRemappingListener inputListener;
 
-	private Robot robot;
-
 	@Override
 	protected void startUp() {
-		try {
-			robot = new Robot();
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
 		keyManager.registerKeyListener(inputListener);
 	}
 
@@ -51,17 +42,8 @@ public class ClickRemappingPlugin extends Plugin {
 	}
 
 	@Provides
-	ClickRemappingConfig provideConfig(ConfigManager configManager)
-	{
+	ClickRemappingConfig provideConfig(ConfigManager configManager) {
 		return configManager.getConfig(ClickRemappingConfig.class);
-	}
-
-	public void press() {
-		robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-	}
-
-	public void release() {
-		robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	}
 
 	public boolean checkGuard() {
