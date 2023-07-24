@@ -19,7 +19,7 @@ public class ClickRemappingListener implements KeyListener {
     @Inject
     private ClickRemappingConfig config;
 
-    private Set<Keybind> heldDown = new HashSet<>();
+    private final Set<Keybind> heldDown = new HashSet<>();
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -27,25 +27,27 @@ public class ClickRemappingListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (plugin.checkGuard()) {
+        if (e.isConsumed() || plugin.checkGuard()) {
             return;
         }
 
-        if (config.keybind().matches(e) && !heldDown.contains(config.keybind())) {
+        Keybind keybind = config.keybind();
+        if (keybind.matches(e) && heldDown.add(keybind)) {
             mouse.press();
-            heldDown.add(config.keybind());
+            e.consume();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (plugin.checkGuard()) {
+        if (e.isConsumed()) {
             return;
         }
 
-        if (config.keybind().matches(e) && heldDown.contains(config.keybind())) {
+        Keybind keybind = config.keybind();
+        if (keybind.matches(e) && heldDown.remove(keybind)) {
             mouse.release();
-            heldDown.remove(config.keybind());
+            e.consume();
         }
     }
 
