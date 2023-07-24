@@ -72,7 +72,7 @@ public class ClickRemappingPlugin extends Plugin {
 	}
 
 	private boolean isTyping() {
-		return !client.getVar(VarClientStr.CHATBOX_TYPED_TEXT).isEmpty();
+		return !client.getVarcStrValue(VarClientStr.CHATBOX_TYPED_TEXT).isEmpty();
 	}
 
 }
